@@ -22,15 +22,19 @@ class Controller extends BaseController
      */
 
     /**
+     *
+     *  *  @OA\Server(
+     *      url="https://digiback.suaquran.com/api",
+     *      description="Live Server"
+     *  )
+     *
+     *
      * @OA\Server(
      *      url="http://digiback.test/api",
      *      description="Local Development"
      * )
      *
-     *  @OA\Server(
-     *      url=L5_SWAGGER_CONST_HOST,
-     *      description="Live Server"
-     *  )
+
      *
      *
      */
