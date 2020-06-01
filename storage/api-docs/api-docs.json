@@ -10,12 +10,12 @@
     },
     "servers": [
         {
-            "url": "http://digiback.test/api",
-            "description": "Local Development"
+            "url": "https://digiback.suaquran.com/api",
+            "description": "Live Server"
         },
         {
-            "url": "http://my-default-host.com",
-            "description": "Live Server"
+            "url": "http://digiback.test/api",
+            "description": "Local Development"
         }
     ],
     "paths": {
