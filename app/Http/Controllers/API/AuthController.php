@@ -16,13 +16,12 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(), [
             'email'    => 'required| email|unique:users',
-            'password' => 'required|alpha_num|min:8',
+            'password' => 'required|alpha_num',
             'name'     => 'required',
         ]);
 
         if ($validator->fails()) {
-            return
-            response()->json(['error' => $validator->errors()], 400);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
         $user = User::firstOrCreate([
@@ -37,7 +36,7 @@ class AuthController extends Controller
                 return ['status' => 'success', 'user' => $user];
             }
         } catch (\Exception $e) {
-            return response()->json(['status' => 'failed', 'error' => $e->getMessage()]);
+            return response()->json(['status' => 'failed', 'error' => $e->getMessage()], 400);
         }
     }
 
@@ -46,13 +45,27 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         try {
-            if (Auth::attempt($credentials)) {
-                // Authentication passed...
-                return ['status' => 'success', 'user' => Auth::user()];
+            $login = Auth::attempt($credentials);
+            // Authentication passed...
+            if ($login) {
+                return [
+                    'status' => 'success',
+                    'user'   => Auth::user(),
+                    'token'  => $this->token($request),
+                ];
+            } else {
+                return response()->json(['status' => 'failed', 'error' => 'Fail to login'], 400);
             }
+
         } catch (\Exception $e) {
-            return response()->json(['status' => 'failed', 'error' => $e->getMessage()]);
+            return response()->json(['status' => 'failed', 'error' => $e->getMessage()], 400);
         }
+
+    }
+
+    protected function token(Request $request)
+    {
+        return base64_encode($request->email . ":" . $request->password);
 
     }
 
