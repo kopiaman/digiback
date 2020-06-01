@@ -11,6 +11,43 @@ use Validator;
 
 class AuthController extends Controller
 {
+
+    /**
+     * @OA\Post(
+     *      path="/auth/create",
+     *      summary="Create new user",
+     *    @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     type="string",
+     *                      format="password"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+
+     *     )
+     *
+     */
+
     public function create(Request $request)
     {
 
@@ -39,6 +76,39 @@ class AuthController extends Controller
             return response()->json(['status' => 'failed', 'error' => $e->getMessage()], 400);
         }
     }
+
+    /**
+     * @OA\Post(
+     *      path="/auth/login",
+     *      summary="Login existing user",
+     *    @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 type="object",
+     *
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     type="string",
+     *                      format="password"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+
+     *     )
+     *
+     */
 
     public function login(Request $request)
     {
